@@ -1,47 +1,76 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=24112853&assignment_repo_type=AssignmentRepo)
 # Day 10 Lab: Data Pipeline & Data Observability
 
-**Student Email:** email@example.com
-**Name:** (Dien ten cua ban)
+**Student Email:** email_cua_ban@example.com  
+**Name:** lequanneKMA  
+**Student ID:** AI20K-lequanneKMA  
 
 ---
 
-## Mo ta
+## Mô tả (Description)
 
-(Mo ta ngan gon bai lab va nhung gi ban da lam)
+Bài Lab này thiết lập một đường ống dẫn dữ liệu ETL (Extract, Validate, Transform, Load) tự động bằng Python và Pandas nhằm xử lý và chuẩn hóa dữ liệu sản phẩm từ file JSON sang CSV. Qua đó, tiến hành thử nghiệm "Stress Test" để đánh giá mức độ ảnh hưởng của chất lượng dữ liệu đầu vào (Data Quality) đối với câu trả lời của AI Agent (mô phỏng hệ thống RAG).
+
+Các bước chính đã thực hiện:
+1. **Extract**: Đọc dữ liệu thô từ file `raw_data.json` có xử lý lỗi.
+2. **Validate**: Loại bỏ các bản ghi không hợp lệ (giá trị price <= 0 hoặc category rỗng).
+3. **Transform**: Áp dụng mức giảm giá 10% cho tất cả sản phẩm, chuẩn hóa danh mục sang dạng Title Case, và thêm cột dấu thời gian `processed_at`.
+4. **Load**: Xuất dữ liệu sạch ra file `processed_data.csv`.
+5. **Stress Test**: Tạo dữ liệu lỗi (`garbage_data.csv`) và chạy mô phỏng AI Agent để phân tích lỗi.
 
 ---
 
-## Cach chay (How to Run)
+## Cách chạy (How to Run)
 
-### Prerequisites
+### Cài đặt thư viện (Prerequisites)
+Đảm bảo bạn đã kích hoạt môi trường ảo `venv` và cài đặt các thư viện cần thiết:
 ```bash
-pip install pandas
+source venv/bin/activate
+pip install pandas pytest
 ```
 
-### Chay ETL Pipeline
+### Chạy ETL Pipeline
+Để thực hiện quá trình xử lý dữ liệu và tạo file `processed_data.csv`:
 ```bash
 python solution.py
 ```
 
-### Chay Agent Simulation (Stress Test)
+### Chạy sinh dữ liệu lỗi (Garbage Data)
+Để tạo ra file chứa dữ liệu lỗi cho Stress Test:
 ```bash
-# Mo ta cach ban chay thi nghiem Clean vs Garbage data
+python generate_garbage.py
+```
+
+### Chạy Agent Simulation (Stress Test)
+Chạy thử nghiệm RAG Agent để xem sự khác biệt giữa dữ liệu sạch và dữ liệu lỗi:
+```bash
+python agent_simulation.py
+```
+
+### Chạy Unit Test cục bộ
+Để chạy kiểm tra tự động tất cả các bài test chấm điểm cục bộ:
+```bash
+pytest tests/test_autograder.py -v
 ```
 
 ---
 
-## Cau truc thu muc
+## Cấu trúc thư mục
 
 ```
-├── solution.py              # ETL Pipeline script
-├── processed_data.csv       # Output cua pipeline
-├── experiment_report.md     # Bao cao thi nghiem
-└── README.md                # File nay
+├── solution.py              # Script chạy ETL Pipeline
+├── processed_data.csv       # File đầu ra sau khi làm sạch
+├── garbage_data.csv         # File dữ liệu lỗi phục vụ Stress Test
+├── agent_simulation.py      # Script mô phỏng AI Agent
+├── generate_garbage.py      # Script tạo dữ liệu lỗi
+├── experiment_report.md     # Báo cáo kết quả thử nghiệm
+└── README.md                # File hướng dẫn này
 ```
 
 ---
 
-## Ket qua
+## Kết quả (Results)
 
-(Tom tat ket qua: bao nhieu records da xu ly, bao nhieu bi loai, v.v.)
+* **Tổng số bản ghi đầu vào**: 5 bản ghi.
+* **Số bản ghi hợp lệ được giữ lại**: 3 bản ghi (Laptop, Chair, Monitor).
+* **Số bản ghi lỗi bị loại bỏ**: 2 bản ghi (Mystery Box vì giá < 0, Phone vì category rỗng).
+* **Quan sát AI Agent**: Agent trả lời chính xác khi dùng dữ liệu sạch (`Laptop at $1200`), và bị đánh lừa đưa ra câu trả lời sai lệch khi dùng dữ liệu rác (`Nuclear Reactor at $999999`).
