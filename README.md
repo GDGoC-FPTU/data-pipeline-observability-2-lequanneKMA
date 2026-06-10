@@ -1,8 +1,8 @@
 # Day 10 Lab: Data Pipeline & Data Observability
 
-**Student Email:** email_cua_ban@example.com  
-**Name:** lequanneKMA  
-**Student ID:** AI20K-lequanneKMA  
+**Student Email:** lemquan6688@gmail.com  
+**Name:** Lê Nguyễn Minh Quân
+**Student ID:** 2A202600821
 
 ---
 

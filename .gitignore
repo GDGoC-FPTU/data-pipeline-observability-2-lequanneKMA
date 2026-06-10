@@ -1,2 +1,7 @@
 ./venv/
 venv/
+.agents/
+etl-observability-lab.md
+__pycache__/
+*.pyc
+
